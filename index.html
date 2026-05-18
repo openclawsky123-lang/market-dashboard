@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market Dashboard · 2026-05-19 04:01 HKT</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface2: #f1efe8;
+    --border: rgba(0,0,0,0.1);
+    --text: #1a1a1a;
+    --muted: #6b6b68;
+    --hint: #999996;
+    --up: #1d9e75;
+    --dn: #d85a30;
+    --accent: #534ab7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18;
+      --surface: #242422;
+      --surface2: #2e2e2c;
+      --border: rgba(255,255,255,0.1);
+      --text: #f0ede8;
+      --muted: #a0a09d;
+      --hint: #666663;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); padding: 2rem; font-size: 14px; line-height: 1.5; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  .hdr { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  .hdr h1 { font-size: 22px; font-weight: 600; }
+  .hdr-meta { font-size: 11px; color: var(--hint); text-align: right; line-height: 1.8; }
+  .sec { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--hint); margin: 1.5rem 0 .625rem; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+  .grid { display: grid; gap: 10px; margin-bottom: 6px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 600px) { .g3, .g4 { grid-template-columns: repeat(2, 1fr); } .g2 { grid-template-columns: 1fr; } }
+  .card { background: var(--surface2); border-radius: 10px; padding: 12px 14px; }
+  .ctk { font-size: 10px; color: var(--hint); font-weight: 600; letter-spacing: .04em; margin-bottom: 1px; }
+  .clb { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .cv  { font-size: 20px; font-weight: 600; color: var(--text); line-height: 1.2; }
+  .cs  { font-size: 11px; margin-top: 3px; color: var(--muted); }
+  .up { color: var(--up); } .dn { color: var(--dn); } .ne { color: var(--hint); }
+  .wide { background: var(--surface2); border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; }
+  .mrow { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .mrow:last-child { border-bottom: none; }
+  .ml { font-size: 12px; color: var(--muted); }
+  .mv { font-size: 13px; font-weight: 600; color: var(--text); }
+  .ms { font-size: 11px; color: var(--hint); margin-left: 8px; }
+  .dvol-block { background: var(--surface2); border-radius: 10px; padding: 14px 16px; }
+  .dvol-num { font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .dvol-zone { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .bar-bg { height: 8px; background: var(--border); border-radius: 99px; margin-bottom: 4px; }
+  .bar-fill { height: 8px; border-radius: 99px; }
+  .bar-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--hint); margin-bottom: 10px; }
+  .dvol-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .ds { background: var(--surface); border-radius: 8px; padding: 8px 10px; }
+  .ds-l { font-size: 10px; color: var(--hint); margin-bottom: 2px; }
+  .ds-v { font-size: 15px; font-weight: 600; color: var(--text); }
+  .hl-note { font-size: 11px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; line-height: 1.6; }
+  .pill { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 99px; border: 1px solid var(--border); color: var(--hint); margin-left: 4px; vertical-align: middle; }
+  .link { color: var(--accent); text-decoration: none; font-size: 10px; }
+  .link:hover { text-decoration: underline; }
+  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 10px; color: var(--hint); line-height: 1.8; }
+  .tag { display: inline-block; font-size: 9px; padding: 1px 7px; border-radius: 99px; font-weight: 600; margin-left: 6px; }
+  .tag-bull { background: #e1f5ee; color: #085041; }
+  .tag-bear { background: #faece7; color: #712b13; }
+  .tag-neu  { background: var(--surface); color: var(--hint); border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div>
+    <h1>Market Dashboard</h1>
+    <div style="font-size:12px;color:var(--hint);margin-top:4px">Auto-generated · 10am &amp; 10pm HKT daily</div>
+  </div>
+  <div class="hdr-meta">
+    <div>2026-05-19 04:01 HKT</div>
+    <div>Hong Kong Time</div>
+  </div>
+</div>
+
+<!-- COMMODITIES -->
+<div class="sec">Commodities</div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">XAU/USD</div>
+      <div class="clb">Gold</div>
+      <div class="cv">$4,554</div>
+      <div class="cs"><span class="up">+0.58%</span> 24h</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">WTI crude</div>
+      <div class="clb">Oil</div>
+      <div class="cv">$101.53/bbl</div>
+      <div class="cs">WTI spot</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">XAG/USD</div>
+      <div class="clb">Silver</div>
+      <div class="cv">$77.85</div>
+      <div class="cs"><span class="up">+3.03%</span> 24h</div>
+    </div>
+</div>
+
+<!-- TREASURIES -->
+<div class="sec">US Treasuries</div>
+<div class="grid g2">
+  
+    <div class="card">
+      <div class="ctk">US 1Y CMT</div>
+      <div class="clb">1-Year yield</div>
+      <div class="cv">3.57%</div>
+      <div class="cs">Fed cuts priced out</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">US 30Y CMT</div>
+      <div class="clb">30-Year yield</div>
+      <div class="cv">5.15%</div>
+      <div class="cs"><span class="up">+0.37%</span> today</div>
+    </div>
+</div>
+
+<!-- STOCKS -->
+<div class="sec">Stocks</div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">GOOGL</div>
+      <div class="clb">Google</div>
+      <div class="cv">$396.94</div>
+      <div class="cs"><span class="up">+0.42%</span> today · <span class="up">+2.14%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">TSLA</div>
+      <div class="clb">Tesla</div>
+      <div class="cv">$409.99</div>
+      <div class="cs"><span class="dn">-2.05%</span> today · <span class="dn">-7.87%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">NVDA</div>
+      <div class="clb">NVIDIA</div>
+      <div class="cv">$222.32</div>
+      <div class="cs"><span class="dn">-0.93%</span> today · <span class="up">+1.31%</span> 7d</div>
+    </div>
+</div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">00981.HK</div>
+      <div class="clb">SMIC</div>
+      <div class="cv">HK$68.70</div>
+      <div class="cs"><span class="dn">-3.44%</span> today · <span class="dn">-10.31%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">BE</div>
+      <div class="clb">Bloom Energy</div>
+      <div class="cv">$258.58</div>
+      <div class="cs"><span class="dn">-5.97%</span> today · <span class="dn">-8.93%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">MU</div>
+      <div class="clb">Micron Tech</div>
+      <div class="cv">$681.54</div>
+      <div class="cs"><span class="dn">-4.80%</span> today · <span class="dn">-14.31%</span> 7d</div>
+    </div>
+</div>
+
+<!-- COUNTRY INDICES -->
+<div class="sec">Country Indices</div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">QQQ</div>
+      <div class="clb">Nasdaq-100 ETF</div>
+      <div class="cv">$705.88</div>
+      <div class="cs"><span class="dn">-0.09%</span> today · <span class="dn">-1.04%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">VOO</div>
+      <div class="clb">S&amp;P 500 ETF</div>
+      <div class="cv">$679.02</div>
+      <div class="cs"><span class="up">+0.12%</span> today · <span class="dn">-0.07%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">HSI</div>
+      <div class="clb">Hang Seng</div>
+      <div class="cv">25,675</div>
+      <div class="cs"><span class="dn">-1.11%</span> today · <span class="dn">-2.72%</span> 7d</div>
+    </div>
+</div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">SSE</div>
+      <div class="clb">SSE Composite</div>
+      <div class="cv">4,131.53</div>
+      <div class="cs"><span class="dn">-0.10%</span> today · <span class="dn">-1.16%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">N225</div>
+      <div class="clb">Nikkei 225</div>
+      <div class="cv">60,816</div>
+      <div class="cs"><span class="dn">-0.70%</span> today · <span class="dn">-3.03%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">KOSPI</div>
+      <div class="clb">Korea KOSPI</div>
+      <div class="cv">7,516.04</div>
+      <div class="cs"><span class="up">+0.31%</span> today · <span class="up">+0.24%</span> 7d</div>
+    </div>
+</div>
+
+<!-- CRYPTO -->
+<div class="sec">Crypto — token prices</div>
+<div class="grid g4">
+  
+    <div class="card">
+      <div class="ctk">BTC</div>
+      <div class="clb">Bitcoin</div>
+      <div class="cv">$77,023</div>
+      <div class="cs"><span class="dn">-1.80%</span> 24h · <span class="dn">-5.78%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">ETH</div>
+      <div class="clb">Ethereum</div>
+      <div class="cv">$2,130</div>
+      <div class="cs"><span class="dn">-2.90%</span> 24h · <span class="dn">-8.99%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">SOL</div>
+      <div class="clb">Solana</div>
+      <div class="cv">$85.23</div>
+      <div class="cs"><span class="dn">-1.85%</span> 24h · <span class="dn">-12.47%</span> 7d</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">HYPE</div>
+      <div class="clb">Hyperliquid</div>
+      <div class="cv">$46.36</div>
+      <div class="cs"><span class="dn">-1.18%</span> 24h · <span class="up">+10.44%</span> 7d</div>
+    </div>
+</div>
+
+<!-- DVOL -->
+<div class="sec">BTC Volatility — Deribit DVOL</div>
+<div class="dvol-block">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+    <div>
+      <div class="ctk">30-day implied volatility</div>
+      <div class="dvol-num" style="color:#ba7517">40.0</div>
+      <div class="dvol-zone">Low-moderate</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:33.4%;background:#ba7517"></div></div>
+      <div class="bar-labels"><span>0</span><span>Low 40</span><span>Mid 60</span><span>High 80</span><span>120</span></div>
+    </div>
+    <div class="dvol-stats">
+      <div class="ds"><div class="ds-l">Expected daily move</div><div class="ds-v">~2.1%</div></div>
+      <div class="ds"><div class="ds-l">Annualized implied vol</div><div class="ds-v">40.0%</div></div>
+      <div class="ds"><div class="ds-l">1h change</div><div class="ds-v up">-0.0 pts</div></div>
+      <div class="ds"><div class="ds-l">Source</div><div class="ds-v" style="font-size:11px">Deribit API</div></div>
+    </div>
+  </div>
+  <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px"><div class="ctk" style="margin-bottom:8px">DVOL — last 12 hours</div><svg viewBox="0 0 200 44" width="100%" height="44" preserveAspectRatio="none" style="display:block"><polyline points="0.0,17.1 18.2,16.5 36.4,23.3 54.5,28.4 72.7,25.3 90.9,15.4 109.1,19.9 127.3,21.0 145.5,21.2 163.6,18.1 181.8,27.9 200.0,28.6" fill="none" stroke="#ba7517" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><div style="position:relative;height:30px;margin-top:2px"><div style="position:absolute;left:0.0%;transform:translateX(-50%);text-align:center;font-size:9px;color:var(--hint);white-space:nowrap">17:00<br><b style="color:var(--text);font-size:10px">40.8</b></div><div style="position:absolute;left:27.3%;transform:translateX(-50%);text-align:center;font-size:9px;color:var(--hint);white-space:nowrap">20:00<br><b style="color:var(--text);font-size:10px">40.0</b></div><div style="position:absolute;left:54.5%;transform:translateX(-50%);text-align:center;font-size:9px;color:var(--hint);white-space:nowrap">23:00<br><b style="color:var(--text);font-size:10px">40.6</b></div><div style="position:absolute;left:81.8%;transform:translateX(-50%);text-align:center;font-size:9px;color:var(--hint);white-space:nowrap">02:00<br><b style="color:var(--text);font-size:10px">40.7</b></div><div style="position:absolute;left:100.0%;transform:translateX(-50%);text-align:center;font-size:9px;color:var(--hint);white-space:nowrap">04:00<br><b style="color:var(--text);font-size:10px">40.0</b></div></div></div>
+</div>
+
+<!-- CRYPTO INDICES -->
+<div class="sec">Crypto indices <span class="pill">Binance klines</span></div>
+<div class="grid g3">
+  <div class="card">
+    <div class="ctk">AHR999</div>
+    <div class="clb">BTC accumulation index</div>
+    <div class="cv" style="color:#ba7517">0.464</div>
+    <div class="cs">Accumulation zone &nbsp;<a class="link" href="https://www.coinglass.com/pro/i/ahr999" target="_blank">chart ↗</a></div>
+  </div>
+  <div class="card">
+    <div class="ctk">200W MA</div>
+    <div class="clb">BTC vs 200-week moving avg</div>
+    <div class="cv">1.25×</div>
+    <div class="cs">200W MA $61,374 &nbsp;<a class="link" href="https://www.coinglass.com/pro/i/200WMA" target="_blank">heatmap ↗</a></div>
+  </div>
+  <div class="card">
+    <div class="ctk">SINCE HALVING</div>
+    <div class="clb">Apr 19 2024 · day 759</div>
+    <div class="cv up">+20.7%</div>
+    <div class="cs">at halving $63,818 &nbsp;<a class="link" href="https://www.coinglass.com/pro/i/bitcoin-price-performance-since-halving" target="_blank">cycles ↗</a></div>
+  </div>
+</div>
+
+<!-- PRE-IPO (PreStocks) -->
+<div class="sec">Pre-IPO market <span class="pill">PreStocks · Solana</span></div>
+<div class="hl-note">Token prices implying company valuations via SPV exposure. Speculative — not equity ownership. <a class="link" href="https://prestocks.com/products" target="_blank">prestocks.com ↗</a></div>
+<div class="grid g3">
+  
+    <div class="card">
+      <div class="ctk">ANTHROPIC</div>
+      <div class="clb">Anthropic</div>
+      <div class="cv">$945.65</div>
+      <div class="cs"><span class="up">+0.80%</span> 24h · impl. val $1.39T</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">SPACEX</div>
+      <div class="clb">SpaceX</div>
+      <div class="cv">$775.01</div>
+      <div class="cs"><span class="up">+2.44%</span> 24h · impl. val $1.92T</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">OPENAI</div>
+      <div class="clb">OpenAI</div>
+      <div class="cv">$1,332</div>
+      <div class="cs"><span class="up">+3.42%</span> 24h · impl. val $1.11T</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">ANDURIL</div>
+      <div class="clb">Anduril</div>
+      <div class="cv">$124.98</div>
+      <div class="cs"><span class="up">+1.61%</span> 24h · impl. val $93.3B</div>
+    </div>
+  
+    <div class="card">
+      <div class="ctk">NEURALINK</div>
+      <div class="clb">Neuralink</div>
+      <div class="cv">$312.46</div>
+      <div class="cs"><span class="up">+6.60%</span> 24h · impl. val $59.7B</div>
+    </div>
+</div>
+
+<!-- MSTR -->
+<div class="sec">Strategy (MSTR) — Bitcoin treasury</div>
+<div class="wide">
+  <div class="mrow"><span class="ml">BTC holdings</span><span><span class="mv">818,869 BTC</span><span class="ms">~3.9% of all BTC ever</span></span></div>
+  <div class="mrow"><span class="ml">Avg cost basis</span><span><span class="mv">$75,540</span><span class="ms">Total ~$61.86B spent</span></span></div>
+  <div class="mrow"><span class="ml">mNAV (EV basis)</span><span><a class="link" href="https://www.strategy.com/" target="_blank" style="font-size:13px;font-weight:600;color:var(--accent)">Live on strategy.com ↗</a></span></div>
+  <div class="mrow"><span class="ml">MSTR stock</span><span><span class="mv">$166.63</span><span class="ms"><span class="dn">-5.32%</span> today</span></span></div>
+  <div class="mrow"><span class="ml">Latest purchase</span><span><span class="mv">535 BTC</span><span class="ms">535 BTC · May 11 · avg $80,340</span></span></div>
+</div>
+<div style="margin-top:8px;font-size:11px">
+  <a class="link" href="https://www.strategy.com/purchases" target="_blank">strategy.com/purchases ↗</a>
+  &nbsp;·&nbsp;
+  <a class="link" href="https://www.strategy.com/" target="_blank">strategy.com (live mNAV) ↗</a>
+</div>
+
+<div class="footer">
+  Generated: 2026-05-19 04:01 HKT HKT &nbsp;·&nbsp;
+  Sources: Binance (crypto) · CoinGecko (metals/HYPE) · yfinance (equities/yields) · Deribit public API (DVOL) · Strategy.com (MSTR) &nbsp;·&nbsp;
+  Not financial advice.
+</div>
+
+</div>
+</body>
+</html>
