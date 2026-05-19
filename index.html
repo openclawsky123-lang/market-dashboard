@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Market Dashboard · 2026-05-20 00:45 HKT</title>
+<title>Market Dashboard · 2026-05-20 00:47 HKT</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -94,7 +94,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:12px">
     <div class="hdr-meta">
-      <div>2026-05-20 00:45 HKT</div>
+      <div>2026-05-20 00:47 HKT</div>
       <div>Hong Kong Time</div>
     </div>
     <button class="refresh-btn" id="refreshBtn" onclick="doRefresh()" title="Load latest data">
@@ -111,7 +111,10 @@ function doRefresh() {
   var btn = document.getElementById('refreshBtn');
   btn.classList.add('spinning');
   btn.disabled = true;
-  setTimeout(function() { location.reload(true); }, 300);
+  setTimeout(function() {
+    var url = location.pathname + location.search.replace(/[?&]t=\d+/, '');
+    location.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + 't=' + Date.now();
+  }, 300);
 }
 </script>
 
@@ -122,22 +125,22 @@ function doRefresh() {
     <div class="card">
       <div class="ctk">XAU/USD</div>
       <div class="clb">Gold</div>
-      <div class="cv">—</div>
-      <div class="cs">— 24h</div>
+      <div class="cv">$4,506</div>
+      <div class="cs"><span class="dn">-0.77%</span> 24h</div>
     </div>
   
     <div class="card">
       <div class="ctk">WTI crude</div>
       <div class="clb">Oil</div>
-      <div class="cv">$103.98/bbl</div>
+      <div class="cv">$104.08/bbl</div>
       <div class="cs">WTI spot</div>
     </div>
   
     <div class="card">
       <div class="ctk">XAG/USD</div>
       <div class="clb">Silver</div>
-      <div class="cv">$74.97</div>
-      <div class="cs"><span class="dn">-2.19%</span> 24h</div>
+      <div class="cv">$74.90</div>
+      <div class="cs"><span class="dn">-2.28%</span> 24h</div>
     </div>
 </div>
 
@@ -156,7 +159,7 @@ function doRefresh() {
       <div class="ctk">US 30Y CMT</div>
       <div class="clb">30-Year yield</div>
       <div class="cv">5.17%</div>
-      <div class="cs"><span class="up">+0.45%</span> today</div>
+      <div class="cs"><span class="up">+0.43%</span> today</div>
     </div>
 </div>
 
@@ -167,22 +170,22 @@ function doRefresh() {
     <div class="card">
       <div class="ctk">GOOGL</div>
       <div class="clb">Google</div>
-      <div class="cv">$387.56</div>
-      <div class="cs"><span class="dn">-2.82%</span> today · <span class="up">+0.05%</span> 7d</div>
+      <div class="cv">$387.93</div>
+      <div class="cs"><span class="dn">-2.73%</span> today · <span class="up">+0.15%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">TSLA</div>
       <div class="clb">Tesla</div>
-      <div class="cv">$398.82</div>
-      <div class="cs"><span class="dn">-2.60%</span> today · <span class="dn">-7.99%</span> 7d</div>
+      <div class="cv">$398.76</div>
+      <div class="cs"><span class="dn">-2.61%</span> today · <span class="dn">-8.00%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">NVDA</div>
       <div class="clb">NVIDIA</div>
-      <div class="cv">$223.16</div>
-      <div class="cs"><span class="up">+0.18%</span> today · <span class="up">+1.08%</span> 7d</div>
+      <div class="cv">$222.77</div>
+      <div class="cs"><span class="up">+0.01%</span> today · <span class="up">+0.90%</span> 7d</div>
     </div>
 </div>
 <div class="grid g3">
@@ -197,15 +200,15 @@ function doRefresh() {
     <div class="card">
       <div class="ctk">BE</div>
       <div class="clb">Bloom Energy</div>
-      <div class="cv">$259.98</div>
-      <div class="cs"><span class="up">+0.18%</span> today · <span class="dn">-7.38%</span> 7d</div>
+      <div class="cv">$258.71</div>
+      <div class="cs"><span class="dn">-0.30%</span> today · <span class="dn">-7.83%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">MU</div>
       <div class="clb">Micron Tech</div>
-      <div class="cv">$714.62</div>
-      <div class="cs"><span class="up">+3.71%</span> today · <span class="dn">-6.78%</span> 7d</div>
+      <div class="cv">$713.16</div>
+      <div class="cs"><span class="up">+3.50%</span> today · <span class="dn">-6.97%</span> 7d</div>
     </div>
 </div>
 
@@ -216,14 +219,14 @@ function doRefresh() {
     <div class="card">
       <div class="ctk">QQQ</div>
       <div class="clb">Nasdaq-100 ETF</div>
-      <div class="cv">$703.01</div>
-      <div class="cs"><span class="dn">-0.50%</span> today · <span class="dn">-0.60%</span> 7d</div>
+      <div class="cv">$702.88</div>
+      <div class="cs"><span class="dn">-0.52%</span> today · <span class="dn">-0.62%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">VOO</div>
       <div class="clb">S&amp;P 500 ETF</div>
-      <div class="cv">$676.06</div>
+      <div class="cv">$676.07</div>
       <div class="cs"><span class="dn">-0.48%</span> today · <span class="dn">-0.38%</span> 7d</div>
     </div>
   
@@ -265,29 +268,29 @@ function doRefresh() {
     <div class="card">
       <div class="ctk">BTC</div>
       <div class="clb">Bitcoin</div>
-      <div class="cv">$76,808</div>
-      <div class="cs"><span class="up">+0.40%</span> 24h · <span class="dn">-4.59%</span> 7d</div>
+      <div class="cv">$76,771</div>
+      <div class="cs"><span class="up">+0.38%</span> 24h · <span class="dn">-4.64%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">ETH</div>
       <div class="clb">Ethereum</div>
-      <div class="cv">$2,118</div>
-      <div class="cs"><span class="up">+0.87%</span> 24h · <span class="dn">-6.91%</span> 7d</div>
+      <div class="cv">$2,117</div>
+      <div class="cs"><span class="up">+0.77%</span> 24h · <span class="dn">-6.96%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">SOL</div>
       <div class="clb">Solana</div>
-      <div class="cv">$84.77</div>
-      <div class="cs"><span class="up">+0.47%</span> 24h · <span class="dn">-10.09%</span> 7d</div>
+      <div class="cv">$84.73</div>
+      <div class="cs"><span class="up">+0.35%</span> 24h · <span class="dn">-10.13%</span> 7d</div>
     </div>
   
     <div class="card">
       <div class="ctk">HYPE</div>
       <div class="clb">Hyperliquid</div>
-      <div class="cv">$48.03</div>
-      <div class="cs"><span class="up">+6.72%</span> 24h · <span class="up">+19.48%</span> 7d</div>
+      <div class="cv">$47.99</div>
+      <div class="cs"><span class="up">+6.61%</span> 24h · <span class="up">+19.44%</span> 7d</div>
     </div>
 </div>
 
@@ -318,7 +321,7 @@ function doRefresh() {
   <div class="card">
     <div class="ctk">AHR999</div>
     <div class="clb">BTC accumulation index</div>
-    <div class="cv" style="color:#ba7517">0.4619</div>
+    <div class="cv" style="color:#ba7517">0.4614</div>
     <div class="cs">Accumulation zone &nbsp;<a class="link" href="https://www.coinglass.com/pro/i/ahr999" target="_blank">chart ↗</a></div>
   </div>
   <div class="card">
@@ -330,7 +333,7 @@ function doRefresh() {
   <div class="card">
     <div class="ctk">SINCE HALVING</div>
     <div class="clb">Apr 19 2024 · day 760</div>
-    <div class="cv up">+20.4%</div>
+    <div class="cv up">+20.3%</div>
     <div class="cs">at halving $63,818 &nbsp;<a class="link" href="https://www.coinglass.com/pro/i/bitcoin-price-performance-since-halving" target="_blank">cycles ↗</a></div>
   </div>
 </div>
@@ -351,7 +354,7 @@ function doRefresh() {
       <div class="ctk">SPACEX</div>
       <div class="clb">SpaceX</div>
       <div class="cv">$800.10</div>
-      <div class="cs"><span class="up">+0.80%</span> 24h · impl. val $1.98T</div>
+      <div class="cs"><span class="up">+0.82%</span> 24h · impl. val $1.98T</div>
     </div>
   
     <div class="card">
@@ -382,7 +385,7 @@ function doRefresh() {
   <div class="mrow"><span class="ml">BTC holdings</span><span><span class="mv">818,869 BTC</span><span class="ms">~3.9% of all BTC ever</span></span></div>
   <div class="mrow"><span class="ml">Avg cost basis</span><span><span class="mv">$75,540</span><span class="ms">Total ~$61.86B spent</span></span></div>
   <div class="mrow"><span class="ml">mNAV (EV basis)</span><span><a class="link" href="https://www.strategy.com/" target="_blank" style="font-size:13px;font-weight:600;color:var(--accent)">Live on strategy.com ↗</a></span></div>
-  <div class="mrow"><span class="ml">MSTR stock</span><span><span class="mv">$166.32</span><span class="ms"><span class="dn">-0.71%</span> today</span></span></div>
+  <div class="mrow"><span class="ml">MSTR stock</span><span><span class="mv">$165.81</span><span class="ms"><span class="dn">-1.01%</span> today</span></span></div>
   <div class="mrow"><span class="ml">Latest purchase</span><span><span class="mv">535 BTC</span><span class="ms">535 BTC · May 11 · avg $80,340</span></span></div>
 </div>
 <div style="margin-top:8px;font-size:11px">
@@ -392,7 +395,7 @@ function doRefresh() {
 </div>
 
 <div class="footer">
-  Generated: 2026-05-20 00:45 HKT HKT &nbsp;·&nbsp;
+  Generated: 2026-05-20 00:47 HKT HKT &nbsp;·&nbsp;
   Sources: Binance (crypto) · CoinGecko (metals/HYPE) · yfinance (equities/yields) · Deribit public API (DVOL) · Strategy.com (MSTR) &nbsp;·&nbsp;
   Not financial advice.
 </div>
